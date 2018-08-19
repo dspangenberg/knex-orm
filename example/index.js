@@ -9,7 +9,7 @@ Company.where({ rank: 3 }).orderBy('name').then((res) => {
 
 
 async function test() {
-  rqliteAdapter.seeds();
+  // rqliteAdapter.seeds();
 
 
 

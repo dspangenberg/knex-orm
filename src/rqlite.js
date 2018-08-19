@@ -1,11 +1,10 @@
 import { getError, toPlainJs } from 'rqlite-js/lib/api/results';
 
-import Knex from 'knex'
+import Knex from 'knex';
 import connect from 'rqlite-js/lib/api/data/client';
-import employees from '../db/seeds/employees'
+import employees from '../db/seeds/employees';
 
 export default class rqliteAdapter {
-
   static get connectionString() {
     return this.connectionString;
   }
@@ -20,7 +19,6 @@ export default class rqliteAdapter {
 
 
   static async seeds() {
-
     const knex = new Knex({
       client: 'sqlite3',
       debug: true,
@@ -28,13 +26,13 @@ export default class rqliteAdapter {
     });
 
     for (const employee of employees) {
-      const sql = knex('employees').insert(employee)
-      console.log(sql.toString())
+      const sql = knex('employees').insert(employee);
+      console.log(sql.toString());
     }
   }
 
   static async migrations() {
-
+    /*
     const knex = new Knex({
       client: 'sqlite3',
       debug: true,
@@ -51,14 +49,13 @@ export default class rqliteAdapter {
       table.date('birth_date').notNullable();
       table.integer('zip_code').unsigned();
     })
-    console.log(employeesSql.toString());
     const companySql = knex.schema.createTable('companies', (table) => {
       table.increments('rank').primary();
 
       table.string('name').notNullable();
       table.string('email').unique();
     });
-    console.log(companySql.toString());
+    */
   }
 
   static getMethod(sql) {
@@ -83,7 +80,7 @@ export default class rqliteAdapter {
   }
 
   static async exec(connectionString, sql) {
-    console.log(sql)
+    console.log(sql);
     await this.connect(connectionString);
     const method = this.getMethod(sql);
     try {
