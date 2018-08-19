@@ -1,5 +1,5 @@
-exports.up = (knex, Promise) =>
-  Promise.all([
+exports.up = (knex, Promise) => {
+
     knex.schema.createTable('employees', (table) => {
       table.increments().primary();
       table.timestamps();
@@ -17,7 +17,7 @@ exports.up = (knex, Promise) =>
       table.string('name').notNullable();
       table.string('email').unique();
     }),
-  ]);
+  );
 
 exports.down = (knex, Promise) =>
   Promise.all([

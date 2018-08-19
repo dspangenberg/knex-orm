@@ -1,13 +1,14 @@
-import test from 'tape';
-import Company from './../example/models/company';
-import Employee from './../example/models/employee';
-import Model from './../example/model';
 import {
   DuplicateModelError,
   EmptyModelError,
   UnidentifiedModelError,
   ValidationError,
 } from './../src/errors';
+
+import Company from './../example/models/company';
+import Employee from './../example/models/employee';
+import Model from './../example/model';
+import test from 'tape';
 
 const NEW_EMPLOYEE_PROPS = {
   companyId: 2,

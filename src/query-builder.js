@@ -1,5 +1,7 @@
-import Config from './config';
 import { flattenArray, modelize } from './utils';
+
+import Config from './config';
+import rqliteAdapter from './rqlite';
 
 /**
  * Represents a query builder which corresponds to a static Model reference.
@@ -67,21 +69,21 @@ export default class QueryBuilder {
     }
 
     let result;
-    return qb.knexInstance
-      .then((res) => {
-        const awaitableQueries = [];
-        result = res;
 
-        // Convert the result to a specific Model type if necessary
-        result = modelize(result, qb.StaticModel);
+    const sql = qb.knexInstance.toString();
+    return rqliteAdapter.exec(sql).then((res) => {
+      const awaitableQueries = [];
+      result = res;
+      // Convert the result to a specific Model type if necessary
+      result = modelize(result, qb.StaticModel);
 
-        // Apply each desired relation to the original result
-        for (const relation of qb.includedRelations) {
-          awaitableQueries.push(relation.applyAsync(result));
-        }
+      // Apply each desired relation to the original result
+      for (const relation of qb.includedRelations) {
+        awaitableQueries.push(relation.applyAsync(result));
+      }
 
-        return Promise.all(awaitableQueries);
-      })
+      return Promise.all(awaitableQueries);
+    })
       .then(() => {
         // Apply the effect of plugins
         for (const plugin of qb.StaticModel.plugins) {

@@ -1,5 +1,6 @@
 import Company from './models/company';
 import Employee from './models/employee';
+import rqliteAdapter from '../src/rqlite';
 
 /*
 Company.where({ rank: 3 }).orderBy('name').then((res) => {
@@ -7,7 +8,17 @@ Company.where({ rank: 3 }).orderBy('name').then((res) => {
 });
 */
 
+
 async function test() {
+  // rqliteAdapter.migrations();
+
+  const famousCompany = new Company({
+    name: 'A Really Famous Company',
+    email: 'info@famouscompany.example',
+  });
+
+  await famousCompany.save();
+
   console.log(Company.query()
     .withRelated('employees')
     .orderBy('name')
