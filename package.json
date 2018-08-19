@@ -8,13 +8,7 @@
     "orm",
     "knex"
   ],
-  "main": "lib/index.js",
-  "files": [
-    "lib/"
-  ],
-  "directories": {
-    "lib": "./lib"
-  },
+  "main": "src/index.js",
   "scripts": {
     "start": "babel-node ./example",
     "build": "babel ./src -d ./lib -s",
