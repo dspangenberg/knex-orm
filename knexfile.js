@@ -3,6 +3,7 @@ module.exports = {
     client: 'sqlite3',
     debug: true,
     useNullAsDefault: true,
+    rqliteConnection: 'http://localhost:4001',
 /*
     connection: {
       filename: './dev.sqlite3',

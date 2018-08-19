@@ -6,11 +6,15 @@ import connect from 'rqlite-js/lib/api/data/client';
 export default class rqliteAdapter {
 
   static get connectionString() {
-    return 'http://localhost:4001';
+    return this.connectionString;
   }
 
-  static async connect() {
-    this.api = await connect(this.connectionString);
+  static set connectionString(connectionString) {
+    this.connectionString = connectionString;
+  }
+
+  static async connect(connectionString) {
+    this.api = await connect(connectionString);
   }
 
   static async migrations() {
@@ -62,8 +66,8 @@ export default class rqliteAdapter {
     return api.select;
   }
 
-  static async exec(sql) {
-    await this.connect();
+  static async exec(connectionString, sql) {
+    await this.connect(connectionString);
     const method = this.getMethod(sql);
     try {
       const res = await method(sql);

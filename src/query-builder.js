@@ -71,7 +71,7 @@ export default class QueryBuilder {
     let result;
 
     const sql = qb.knexInstance.toString();
-    return rqliteAdapter.exec(sql).then((res) => {
+    return rqliteAdapter.exec(qb.knexInstance.client.config.rqliteConnection, sql).then((res) => {
       const awaitableQueries = [];
       result = res;
       // Convert the result to a specific Model type if necessary
