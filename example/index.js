@@ -1,6 +1,6 @@
 import Company from './models/company';
 import Employee from './models/employee';
-
+import rqliteAdapter from '../src/rqlite';
 /*
 Company.where({ rank: 3 }).orderBy('name').then((res) => {
   console.log(res);
@@ -9,14 +9,16 @@ Company.where({ rank: 3 }).orderBy('name').then((res) => {
 
 
 async function test() {
-  // rqliteAdapter.migrations();
+  rqliteAdapter.seeds();
+
+
 
   const famousCompany = new Company({
     name: 'A Really Famous Company',
     email: 'info@famouscompany.example',
   });
 
-  // await famousCompany.save();
+  //await famousCompany.save();
 
   console.log(Company.query()
     .withRelated('employees')
@@ -32,9 +34,8 @@ async function test() {
   const companies = await Company.query()
     .withRelated('employees')
     .orderBy('name')
-    .first();
   console.log('Companies:');
-  console.log(companies);
+  console.dir(companies);
 
   const employee = await Employee.query()
     .where({ id: 3 })
